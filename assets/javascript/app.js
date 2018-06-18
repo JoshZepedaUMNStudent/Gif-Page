@@ -25,27 +25,28 @@ $("#add-car").on("click", function(event) {
     renderButtons();
 });
 
+$(document).on("click", ".car", function(event) {
+    var newCarMake = event.currentTarget.dataset.name;
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + newCarMake + "&api_key=TM1Ti97BZNzUM3NZraSrNAkGgwvIrkfi&limit=5";
+    
+    $.ajax({
+        url: queryURL,
+        method:"GET"
+    }).then(function(response) {
+        var data = response.data;
+        $(".container").empty();
+        for (var i = 0; i < data.length; i++) {
+            var imageURL = data[i].images.fixed_height_still.url;
+            var x = $('<img src="' + imageURL + '" />');
+            $(".container").append(x);
+        }
+    });
+});
+
 renderButtons();
 
 // Displaying the Gifs
-var newCarMake = $("#car-input").val().trim();  //??????????
-var gueryURL = "http://api.giphy.com/v1/gifs/search?q=" + newCarMake + "&api_key=TM1Ti97BZNzUM3NZraSrNAkGgwvIrkfi&limit=5";
- 
-$.ajax({
-    url: queryURL,
-    method:"GET"
-}).then(function(response) {
-    var tBody = $("tbody");
-    var tRow = $("<tr>");
-
-    var columnOneTD = $("<td>").text(response);
-    var columnTwoTD = $("<td>").text(response);
-    var columnThreeTD = $("<td>").text(response);
-    var columnFourTD = $("<td>").text(response);
-    var columnFiveTD = $("<td>").text(response);
-    tRow.append(columnOneTD, columnTwoTD, columnThreeTD, columnFourTD, columnFiveTD);
-    tBody.append(tRow);
-});
+  
 
 
 
@@ -53,34 +54,8 @@ $.ajax({
 
 
 
-// SAMPLE ONLY!
-// var movie = "Mr. Nobody";
-// var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
 
-// $.ajax({
-//   url: queryURL,
-//   method: "GET"
-// }).then(function(response) {
-//   var tBody = $("tbody");
-//   var tRow = $("<tr>");
 
-//   var titleTd = $("<td>").text(response.Title);
-//   var yearTd = $("<td>").text(response.Year);
-//   var actorsTd = $("<td>").text(response.Actors);
-//   tRow.append(titleTd, yearTd, actorsTd);
-//   tBody.append(tRow);
-// });
-
-// SAMPLE ONLY!
-// function showGifs() {
-//     var car = $(this).attr("data-name");
-//     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + newCarMake +"key=TM1Ti97BZNzUM3NZraSrNAkGgwvIrkfi&limit=5" 
-//     console.log(queryURL);
-//     $.ajax({
-//         url: queryURL,
-//         method: 'GET'
-//     })  
-// }
 
   
 
